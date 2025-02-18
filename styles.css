@@ -32,6 +32,15 @@ body {
     }
 }
 
+@keyframes falling {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(45deg);
+    }
+    100% {
+        transform: translateY(100vh) translateX(100vw) rotate(45deg);
+    }
+}
+
 .stars {
     position: fixed;
     top: 0;
@@ -51,6 +60,28 @@ body {
         0 0 8px #fff,
         0 0 12px #fff;
     animation: sparkle var(--duration, 3s) var(--delay, 0s) infinite;
+}
+
+.falling-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    border-radius: 50%;
+    filter: drop-shadow(0 0 6px white);
+    animation: falling var(--duration, 3s) var(--delay, 0s) linear infinite;
+}
+
+.falling-star::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    transform-origin: left;
+    transform: translateX(-100%);
 }
 
 /* Stars container layers */
