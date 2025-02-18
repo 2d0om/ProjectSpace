@@ -21,46 +21,54 @@ body {
     overflow: hidden;
 }
 
-@keyframes move-twinkle {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-2000px);
-    }
-}
-
 .stars {
     position: fixed;
-    width: 1px;
-    height: 1px;
-    background: transparent;
-    box-shadow: 1744px 122px #FFF,134px 1321px #FFF,1922px 800px #FFF,1924px 1540px #FFF,
-                1752px 892px #FFF,1936px 1456px #FFF,461px 704px #FFF,1175px 1932px #FFF,
-                1675px 1366px #FFF,1982px 1079px #FFF,234px 1021px #FFF,1445px 563px #FFF,
-                1064px 686px #FFF,1766px 1566px #FFF,1724px 1842px #FFF,1077px 1285px #FFF,
-                1909px 938px #FFF,519px 1587px #FFF,1949px 1362px #FFF,1532px 1682px #FFF,
-                1922px 1800px #FFF,1936px 1456px #FFF,461px 704px #FFF,1175px 1932px #FFF,
-                1675px 1366px #FFF,1982px 1079px #FFF,234px 1021px #FFF,1445px 563px #FFF,
-                1064px 686px #FFF,1766px 1566px #FFF,1724px 1842px #FFF,1077px 1285px #FFF;
-    animation: move-twinkle 200s linear infinite;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    transform: rotate(-45deg);
 }
 
-.stars::after {
-    content: "";
+.star {
+    --star-color: var(--primary-color, white);
+    --star-tail-length: 6em;
+    --star-tail-height: 2px;
+    --star-width: calc(var(--star-tail-length) / 6);
+    --fall-duration: 9s;
+    --tail-fade-duration: var(--fall-duration);
     position: absolute;
-    top: 2000px;
-    width: 1px;
-    height: 1px;
-    background: transparent;
-    box-shadow: 1744px 122px #FFF,134px 1321px #FFF,1922px 800px #FFF,1924px 1540px #FFF,
-                1752px 892px #FFF,1936px 1456px #FFF,461px 704px #FFF,1175px 1932px #FFF,
-                1675px 1366px #FFF,1982px 1079px #FFF,234px 1021px #FFF,1445px 563px #FFF,
-                1064px 686px #FFF,1766px 1566px #FFF,1724px 1842px #FFF,1077px 1285px #FFF,
-                1909px 938px #FFF,519px 1587px #FFF,1949px 1362px #FFF,1532px 1682px #FFF,
-                1922px 1800px #FFF,1936px 1456px #FFF,461px 704px #FFF,1175px 1932px #FFF,
-                1675px 1366px #FFF,1982px 1079px #FFF,234px 1021px #FFF,1445px 563px #FFF,
-                1064px 686px #FFF,1766px 1566px #FFF,1724px 1842px #FFF,1077px 1285px #FFF;
+    top: var(--top-offset);
+    left: var(--left-offset);
+    width: var(--star-tail-length);
+    height: var(--star-tail-height);
+    color: var(--star-color);
+    background: linear-gradient(45deg, currentColor, transparent);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 6px currentColor);
+    transform: translate3d(104em, 0, 0);
+    animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translate3d(-30em, 0, 0);
+    }
+}
+
+@keyframes tail-fade {
+    0%, 50% {
+        width: var(--star-tail-length);
+        opacity: 1;
+    }
+    70%, 80% {
+        width: 0;
+        opacity: 0.4;
+    }
+    100% {
+        width: 0;
+        opacity: 0;
+    }
 }
 
 .animated-title {
@@ -73,6 +81,7 @@ body {
                  0 0 60px rgba(255, 255, 255, 0.2);
     animation: fadeInUp 1.5s ease-out, glow 2s ease-in-out infinite alternate;
     letter-spacing: 10px;
+    z-index: 1;
 }
 
 @keyframes fadeInUp {
